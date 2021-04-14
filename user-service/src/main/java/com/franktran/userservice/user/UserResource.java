@@ -1,13 +1,11 @@
 package com.franktran.userservice.user;
 
 import com.franktran.userservice.department.Department;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
@@ -39,5 +37,28 @@ public class UserResource {
         ud.setUser(user);
         ud.setDepartment(department);
         return ud;
+    }
+
+    @PostMapping
+    public void createUser(@RequestBody User user) {
+        userRepository.save(user);
+    }
+
+    @PutMapping("/{id}")
+    public void updateUser(@PathVariable long id, @RequestBody User user) {
+        User existUser = getUserById(id);
+        if (Objects.nonNull(existUser)) {
+            existUser.setName(user.getName());
+            existUser.setEmail(user.getEmail());
+            existUser.setDepartmentId(user.getDepartmentId());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable long id) {
+        User existUser = getUserById(id);
+        if (Objects.nonNull(existUser)) {
+            userRepository.deleteById(id);
+        }
     }
 }
