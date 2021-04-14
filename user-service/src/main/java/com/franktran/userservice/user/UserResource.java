@@ -1,8 +1,6 @@
 package com.franktran.userservice.user;
 
 import com.franktran.userservice.department.Department;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +16,9 @@ public class UserResource {
     private final UserRepository userRepository;
     private final RestTemplate restTemplate;
 
-    public UserResource(UserRepository userRepository, RestTemplate restTemplateBuilder) {
+    public UserResource(UserRepository userRepository, RestTemplate restTemplate) {
         this.userRepository = userRepository;
-        this.restTemplate = restTemplateBuilder;
+        this.restTemplate = restTemplate;
     }
 
     @GetMapping
